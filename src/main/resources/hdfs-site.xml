@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+
+<!-- Put site-specific property overrides in this file. -->
+
+<configuration>
+<!-- NameNode数据存储目录 -->
+  <property>
+    <name>dfs.namenode.name.dir</name>
+    <value>file:///bigdata/data2/name</value>
+  </property>
+<!-- DataNode数据存储目录 -->
+  <property>
+    <name>dfs.datanode.data.dir</name>
+ <value>file:///bigdata/data4/dn4,file:///bigdata/data5/dn5,file:///bigdata/data6/dn6,file:///bigdata/data7/dn7,file:///bigdata/data8/dn8,file:///bigdata/data9/dn9,file:///bigdata/data10/dn10,file:///bigdata/data11/dn11,file:///bigdata/data12/dn12</value>
+  </property>
+<!-- JournalNode数据存储目录 -->
+  <property>
+    <name>dfs.journalnode.edits.dir</name>
+    <value>/bigdata/data2/jn</value>
+  </property>
+<!-- NameNode有一个工作线程池，默认值是10 -->
+  <property>
+    <name>dfs.namenode.handler.count</name>
+    <value>21</value>
+</property>
+<!-- 完全分布式集群名称 -->
+  <property>
+    <name>dfs.nameservices</name>
+    <value>cluster-hdfs</value>
+  </property>
+<!-- 集群中NameNode节点都有哪些 -->
+  <property>
+    <name>dfs.ha.namenodes.cluster-hdfs</name>
+    <value>nn1,nn2</value>
+  </property>
+<!-- NameNode的RPC通信地址 -->
+  <property>
+    <name>dfs.namenode.rpc-address.cluster-hdfs.nn1</name>
+    <value>zuler101:8020</value>
+  </property>
+  <property>
+    <name>dfs.namenode.rpc-address.cluster-hdfs.nn2</name>
+    <value>zuler102:8020</value>
+  </property>
+<!-- NameNode的http通信地址 -->
+  <property>
+    <name>dfs.namenode.http-address.cluster-hdfs.nn1</name>
+    <value>zuler101:9870</value>
+  </property>
+  <property>
+    <name>dfs.namenode.http-address.cluster-hdfs.nn2</name>
+    <value>zuler102:9870</value>
+  </property>
+<!-- 指定NameNode如何找到JournalNode -->
+  <property>
+<name>dfs.namenode.shared.edits.dir</name>
+<value>qjournal://zuler101:8485;zuler102:8485;zuler103:8485/cluster-hdfs</value>
+  </property>
+<!-- 访问代理类：client用于确定哪个NameNode为Active -->
+  <property>
+    <name>dfs.client.failover.proxy.provider.cluster-hdfs</name>
+ <value>org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider</value>
+  </property>
+<!-- 配置隔离机制，即同一时刻只能有一台服务器对外响应 -->
+  <property>
+    <name>dfs.ha.fencing.methods</name>
+    <value>sshfence</value>
+  </property>
+<!-- 使用隔离机制时需要ssh秘钥登录-->
+  <property>
+    <name>dfs.ha.fencing.ssh.private-key-files</name>
+    <value>/home/bigdata/.ssh/id_rsa</value>
+  </property>
+<!-- 启用nn故障自动转移 -->
+<property>
+	<name>dfs.ha.automatic-failover.enabled</name>
+	<value>true</value>
+</property>
+</configuration>
